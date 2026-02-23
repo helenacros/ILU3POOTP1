@@ -10,16 +10,19 @@ public class Attaque extends Bataille {
 	
 	@Override
 	public String toString() {
-		String renvoi= "Attaque [";
+		String renvoi= "Attaque ";
 		switch(getType()) {
 			case FEU:
-				renvoi = renvoi+"Feu Rouge]";
+				renvoi = renvoi+"Feu Rouge";
+				break;
 			case ESSENCE:
-				renvoi= renvoi+"Panne d'essence]";
+				renvoi= renvoi+"Panne d'essence";
+				break;
 			case CREVAISON:
-				renvoi=renvoi+"Crevaison]";
+				renvoi=renvoi+"Crevaison";
+				break;
 			case ACCIDENT:
-				renvoi=renvoi+"Accident]";
+				renvoi=renvoi+"Accident";
 			break;
 				
 		}

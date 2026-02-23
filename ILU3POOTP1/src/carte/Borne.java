@@ -10,7 +10,7 @@ public class Borne extends Cartes {
 
 	@Override
 	public String toString() {
-		return "Borne [km=" + km + "]";
+		return "Borne km=" + km + "";
 	}
 
 }

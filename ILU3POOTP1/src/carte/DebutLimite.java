@@ -2,9 +2,11 @@ package carte;
 
 public class DebutLimite extends Limite {
 
+
+
 	@Override
 	public String toString() {
-		return "Limite []";
+		return "Limite 50";
 	}
 
 }

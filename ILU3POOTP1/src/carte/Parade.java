@@ -9,17 +9,20 @@ public class Parade extends Bataille {
 	
 	@Override
 	public String toString() {
-		String renvoi= "Parade [";
+		String renvoi= "Parade ";
 		switch(getType()) {
 			case FEU:
-				renvoi = renvoi+"Feu Vert]";
+				renvoi = renvoi+"Feu Vert";
+				break;
 			case ESSENCE:
-				renvoi= renvoi+"Essence]";
+				renvoi= renvoi+"Essence";
+				break;
 			case CREVAISON:
-				renvoi=renvoi+"Roue de secours]";
+				renvoi=renvoi+"Roue de secours";
+				break;
 			case ACCIDENT:
-				renvoi=renvoi+"Réparation]";
-			break;
+				renvoi=renvoi+"Réparation";
+				break;
 				
 		}
 		return renvoi;
