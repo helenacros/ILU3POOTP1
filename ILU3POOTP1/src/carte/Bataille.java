@@ -7,4 +7,11 @@ public abstract class Bataille extends Probleme {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Bataille bataille) {
+			return (getType().equals(bataille.getType())) && (getClass() == bataille.getClass());
+		}
+		return false;
+	}
 }

@@ -1,5 +1,7 @@
 package carte;
 
+import java.util.Iterator;
+
 public class JeuDeCartes {
 	private Configuration[] typeDeCartes= new Configuration[19];
 	
@@ -77,6 +79,22 @@ public class JeuDeCartes {
 		}
 		return cartes;
 	}
+	
+	public boolean checkCount() {
+		Cartes[] cartes = donnerCartes();
+		int nbCartes=0;
+		for (int i = 0; i < typeDeCartes.length; i++) {
+			for (int j = 0; j < typeDeCartes[i].getNbExmplaires(); j++) {
+				if(!cartes[nbCartes].equals(typeDeCartes[i].getCarte())) {
+					return false;
+				}
+				nbCartes ++;
+			}
+		}
+		return true;
+	}
+	
+	
 
 
 	

@@ -8,4 +8,9 @@ public class FinLimite extends Limite {
 		return "Fin Limite 50 ";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof FinLimite;
+	}
+
 }
