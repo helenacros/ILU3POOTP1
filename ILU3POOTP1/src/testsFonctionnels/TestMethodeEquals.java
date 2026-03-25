@@ -6,7 +6,7 @@ import carte.Parade;
 import carte.Type;
 
 public class TestMethodeEquals {
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		Borne b1 = new Borne(25);
 		Borne b2= new Borne(25);
 		System.out.println("Deux cartes de 25km sont identiques ?" + b1.equals(b2));

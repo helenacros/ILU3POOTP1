@@ -103,34 +103,23 @@ public class GestionCartes {
 	
 	public static void main(String[] args) {
 
-	    testerRassemblement(new ArrayList<>(List.of()));                 // true
-	    testerRassemblement(new ArrayList<>(List.of(1, 1, 2, 1, 3)));   // false
-	    testerRassemblement(new ArrayList<>(List.of(1, 4, 3, 2)));      // true
-	    testerRassemblement(new ArrayList<>(List.of(1, 1, 2, 3, 1)));   // false
-
 	    JeuDeCartes jeu = new JeuDeCartes();
-
 	    List<Cartes> listeCarteNonMelangee = new LinkedList<>();
 	    for (Cartes carte : jeu.donnerCartes()) {
-	        listeCarteNonMelangee.add(carte);
+	    listeCarteNonMelangee.add(carte);
 	    }
-	    
 	    List<Cartes> listeCartes = new ArrayList<>(listeCarteNonMelangee);
 	    System.out.println(listeCartes);
-	    
 	    listeCartes = GestionCartes.melanger(listeCartes);
 	    System.out.println(listeCartes);
-	    
 	    System.out.println("liste mélangée sans erreur ? "
-	        + GestionCartes.verifierMelange(listeCarteNonMelangee, listeCartes));
-	    
-	    listeCartes = GestionCartes.rassembler(listeCartes); 
+	    + GestionCartes.verifierMelange(listeCarteNonMelangee, listeCartes));
+	    listeCartes = GestionCartes.rassembler(listeCartes);
 	    System.out.println(listeCartes);
-	    
 	    System.out.println("liste rassemblée sans erreur ? "
-	        + GestionCartes.verifierRassemblement(listeCartes));
-	}
+	    + GestionCartes.verifierRassemblement(listeCartes));
 
+	}
 
 	
 	
