@@ -13,15 +13,15 @@ public class Jeu {
 	private Sabot sabot;
 	
 	public Jeu(Sabot sabot) {
-		JeuDeCartes modeleJeu= new JeuDeCartes();
-		Cartes[] tabCartes= modeleJeu.donnerCartes();
+		JeuDeCartes jeuDeCarte= new JeuDeCartes();
+		Cartes[] tabCartes= jeuDeCarte.donnerCartes();
 		
 		List<Cartes> listeCartes= new ArrayList<>();
 		Collections.addAll(listeCartes,tabCartes);
 		
 		listeCartes=GestionCartes.melanger(listeCartes);
 		
-		//manque la fin 
+		sabot=new Sabot((Cartes[]) listeCartes.toArray());
 		
 	}
 
