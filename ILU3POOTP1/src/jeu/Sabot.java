@@ -79,6 +79,7 @@ public class Sabot implements Iterable<Cartes> {
 		if(nbCartes<cartes.length) {
 			cartes[nbCartes]=carte;
 			nbCartes++;
+			nbOpe ++;
 		}else {
 			throw new ArrayIndexOutOfBoundsException("out of place in the sabot !!");
 		}

@@ -2,23 +2,21 @@ package testsFonctionnels;
 
 import carte.Attaque;
 import carte.Borne;
+import carte.Cartes;
 import carte.Parade;
 import carte.Type;
 
 public class TestMethodeEquals {
 	public static void main(String[] args) {
-		Borne b1 = new Borne(25);
-		Borne b2= new Borne(25);
-		System.out.println("Deux cartes de 25km sont identiques ?" + b1.equals(b2));
+		Cartes carte25Bornes1 = new Borne(25);
+		Cartes carte25Bornes2 = new Borne(25);
+		System.out.println("Deux cartes de 25km sont identiques ? " + carte25Bornes1.equals(carte25Bornes2));
+	
+		Cartes carteFeuxRouge1 = new Attaque(Type.FEU);
+		Cartes carteFeuxRouge2 = new Attaque(Type.FEU);
+		System.out.println("Deux cartes de feux rouge sont identiques ? " + carteFeuxRouge1.equals(carteFeuxRouge2));
 		
-		Attaque feuR1= new Attaque(Type.FEU);
-		Attaque feuR2= new Attaque(Type.FEU);
-		System.out.println("Deux cartes feux rouges sont identiques ?"+ feuR1.equals(feuR2));
-		
-		Parade feuVert= new Parade (Type.FEU);
-		System.out.println("La cartes feu rouge et la carte feu vert sont identiques ?"+feuR1.equals(feuVert));
+		Cartes carteFeuxVert = new Parade(Type.FEU);
+		System.out.println("La carte feu rouge et la carte feu vert sont identiques ? " + carteFeuxRouge1.equals(carteFeuxVert));
 	}
-	
-	
-	
 }

@@ -9,23 +9,8 @@ public class Botte extends Probleme {
 
 	@Override
 	public String toString() {
-		String renvoi= "Botte ";
-		switch(getType()) {
-			case FEU:
-				renvoi = renvoi+"Prioritaire";
-				break;
-			case ESSENCE:
-				renvoi= renvoi+"Citerne";
-				break;
-			case CREVAISON:
-				renvoi=renvoi+"Increvable";
-				break;
-			case ACCIDENT:
-				renvoi=renvoi+"As du volant";
-			break;
-				
-		}
-		return renvoi;
+		Type type = getType();
+		return type.getBotte();
 	}
 
 }

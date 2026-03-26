@@ -8,25 +8,10 @@ public class Attaque extends Bataille {
 	}
 
 	
-	@Override
+	@Override 
 	public String toString() {
-		String renvoi= "Attaque ";
-		switch(getType()) {
-			case FEU:
-				renvoi = renvoi+"Feu Rouge";
-				break;
-			case ESSENCE:
-				renvoi= renvoi+"Panne d'essence";
-				break;
-			case CREVAISON:
-				renvoi=renvoi+"Crevaison";
-				break;
-			case ACCIDENT:
-				renvoi=renvoi+"Accident";
-			break;
-				
-		}
-		return renvoi;
+		Type type = getType();
+		return type.getAttaque();
 	}
 
 }
