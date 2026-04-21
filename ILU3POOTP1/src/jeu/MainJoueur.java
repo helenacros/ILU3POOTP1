@@ -13,9 +13,17 @@ public class MainJoueur {
 		main.add(carte);
 	}
 	
-	public void joueur(Cartes carte) {
+	public void jouer(Cartes carte) {
 		assert(main.contains(carte));
 		main.remove(carte);
+	}
+	
+	public int getNbCartes() {
+	    return main.size();
+	}
+
+	public Cartes getCarte(int index) {
+	    return main.get(index);
 	}
 	
 	@Override

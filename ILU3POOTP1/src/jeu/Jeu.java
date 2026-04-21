@@ -2,7 +2,10 @@ package jeu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import carte.Cartes;
 import carte.JeuDeCartes;
@@ -11,6 +14,9 @@ import utils.GestionCartes;
 public class Jeu {
 	
 	private Sabot sabot;
+	private List<Joueur> joueurs= new ArrayList<>();
+	private static final int NBCARTES = 6;
+	private Iterator<Joueur> itJoueur;
 	
 	public Jeu(Sabot sabot) {
 		JeuDeCartes jeuDeCarte= new JeuDeCartes();
@@ -21,9 +27,76 @@ public class Jeu {
 		
 		listeCartes=GestionCartes.melanger(listeCartes);
 		
-		sabot=new Sabot((Cartes[]) listeCartes.toArray());
+		this.sabot = new Sabot(listeCartes.toArray(new Cartes[0]));
 		
 	}
 
+	public void inscrire(Joueur... nouveauxJoueurs) {
+		for(int i=0 ; i<nouveauxJoueurs.length; i++) {
+			joueurs.add(nouveauxJoueurs[i]);
+		}
+	}
+	
+	public void distribuerCartes() {
+		for (int i=0 ; i<NBCARTES ; i++) {
+			for (int j=0 ; j< joueurs.size(); j++) {
+				Joueur joueurCourant = joueurs.get(j);
+				Cartes carte= sabot.piocher();
+				joueurCourant.getMain().prendre(carte);
+			}
+		}
+	}
+	
+	public String jouerTour(Joueur joueur) {
+		Cartes cartePiochee=joueur.prendreCarte(this.sabot);
+		
+		Set<Joueur> participants = new HashSet<>(this.joueurs);
+		Coup coupChoisi= joueur.choisirCoup(participants);
+		
+		joueur.retirerDeLaMain(coupChoisi.getCarteJouee());
+		
+		if(coupChoisi.getJoueurCible() == null) {
+			sabot.ajouterCarte(coupChoisi.getCarteJouee());
+		}
+		else {
+			coupChoisi.getJoueurCible().deposer(coupChoisi.getCarteJouee());
+		}
+		
+		StringBuilder chaine = new StringBuilder();
+		chaine.append("Le joueur ").append(joueur.getNom()).append(" a pioché ").append(cartePiochee).append("\n");
+		chaine.append("\n");
+		chaine.append(joueur.getNom()).append(" ").append(coupChoisi.toString());
+		chaine.append("\n");
+		return chaine.toString();
+	}
+	
+	public Joueur donnerJoueurSuivant() {
+		if(itJoueur== null || !itJoueur.hasNext()) {
+			itJoueur=joueurs.iterator();
+		}
+		return itJoueur.next();
+	}
+	
+	public String lancer() {
+		StringBuilder chaine= new StringBuilder();
+		boolean gagne=false;
+		
+		while(!sabot.estVide() && !gagne) {
+			Joueur courant= donnerJoueurSuivant();
+			chaine.append(jouerTour(courant));
+			
+			if(courant.donnerKmParcourus() >=1000) {
+				gagne=true;
+				chaine.append("Victoire de ").append(courant.getNom()).append("\n");
+						
+			}
+		}
+		
+		if(!gagne && sabot.estVide()) {
+			chaine.append("Fin de la partie, le sabot est vide, personne n'a atteint les 1000 km");
+		}
+		
+		return chaine.toString();
+	}
 	
 }

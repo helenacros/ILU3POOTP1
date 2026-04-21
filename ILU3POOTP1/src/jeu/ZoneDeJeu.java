@@ -3,10 +3,12 @@ package jeu;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 
 import carte.Attaque;
 import carte.Bataille;
@@ -24,7 +26,21 @@ public class ZoneDeJeu {
 	private List<Limite> pileLimite= new ArrayList<>();
 	private List<Bataille> pileBataille= new ArrayList<>();
 	private Collection<Borne> collectionBorne=new ArrayList<>();
-	private Map<Type,Botte> bottes= new HashMap<>(); //faudrait mettre un set 
+	private Set<Botte> bottes= new HashSet<>(); 
+	
+	public Set<Botte> getBottes(){
+		return bottes;
+	}
+	
+	public boolean presenceLimitation() {
+		return donnerLimitationVitesse()==50;
+	}
+	
+	public Bataille getSommeBataille() {
+		if(pileBataille.isEmpty())
+			return null;
+		return pileBataille.getLast();
+	}
 	
 	public int donnerLimitationVitesse() {
 		if(!estPrioritaire() && !pileLimite.isEmpty() && (pileLimite.getLast() instanceof DebutLimite)) {
@@ -52,35 +68,40 @@ public class ZoneDeJeu {
 			pileBataille.add(bataille);
 		}
 		if(c instanceof Botte botte) {
-			 if(!bottes.containsKey(botte.getType())){ //si ne contient pas deja ce type la dans la botte
-				bottes.put(botte.getType(), botte);
-			 }
+			//grace au equals et au hashcode, le hashset sauura si'l contient drja une bottte de ce type precis
+			 bottes.add(botte);
 		}
 	}
-	
 	public boolean peutAvancer() {
-		if(!pileBataille.isEmpty()) {
-			Bataille sommet = pileBataille.getLast();
-			if(sommet.equals(CartesI.FEU_VERT)) {
-					return true;
-			}
-			if(sommet instanceof Attaque attaque) {
-				return bottes.containsKey(attaque.getType());
-			}
-		}
-		return estPrioritaire() ;
+	 	if (!pileBataille.isEmpty() && pileBataille.getLast().equals(CartesI.FEU_VERT)) {
+	        return true;
+	    }
+	 	
+	    if (!estPrioritaire()) {
+	        return false;
+	    }
+	    
+	    if (pileBataille.isEmpty() || pileBataille.getLast() instanceof Parade) {
+	        return true;
+	    }
+
+	    Bataille sommet = pileBataille.getLast();
+	    return (sommet instanceof Attaque && bottes.contains(new Botte(sommet.getType())));
 	}
 	
 	private boolean estDepotFeuVertAutorise() {
 		if(estPrioritaire())
 			return false;
-		Bataille sommet = pileBataille.getLast();
-		if(pileBataille.isEmpty() ||  sommet.equals(CartesI.FEU_ROUGE) || (sommet instanceof Parade && !sommet.equals(CartesI.FEU_VERT))
-				|| (sommet instanceof Attaque && bottes.containsKey(sommet.getType()))) {
-			return true;
+		if(!pileBataille.isEmpty()) {
+			Bataille sommet = pileBataille.getLast();
+			if(sommet instanceof Parade) {
+				return !sommet.equals(CartesI.FEU_VERT);
+			}
+			if(sommet instanceof Attaque attaque) {
+				return sommet.equals(CartesI.FEU_ROUGE) || bottes.contains(new Botte(attaque.getType()));
+			}
 		}
-		
-		return  false;
+		return  true;
 	}
 		
 	private boolean estDepotBorneAutorise(Borne borne) {
@@ -99,7 +120,7 @@ public class ZoneDeJeu {
 	}
 	
 	private boolean estDepotBatailleAutorise(Bataille bataille) {
-		if(bottes.containsKey(bataille.getType())) {
+		if(bottes.contains(new Botte(bataille.getType()))) {
 			return false;
 		}
 		if(bataille instanceof Attaque) {
@@ -126,16 +147,14 @@ public class ZoneDeJeu {
 		}
 		if(carte instanceof Bataille bataille) {
 			return estDepotBatailleAutorise(bataille);
-		}
-		
+		}	
 		return true;
 	}
 	
+	
+	
 	public boolean estPrioritaire() {
-		if(bottes.containsKey(Type.FEU)) {
-			return true;
-		}
-		return false;
+		return bottes.contains(CartesI.PRIORITAIRE);
 	}
 	
 	
