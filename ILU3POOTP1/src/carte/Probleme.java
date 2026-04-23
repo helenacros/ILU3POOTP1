@@ -1,6 +1,6 @@
 package carte;
 
-public abstract class Probleme extends Cartes {
+public abstract class Probleme extends Cartes implements Comparable<Probleme> {
 	protected Type type;
 	
 	public Probleme(Type type) {
@@ -15,5 +15,10 @@ public abstract class Probleme extends Cartes {
 	public String toString() {
 		return "Probleme [type=" + type + "]";
 	}
+	
+	@Override
+    public int compareTo(Probleme autre) {
+        return this.type.compareTo(autre.getType());
+    }
 
 }

@@ -2,10 +2,12 @@ package jeu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import carte.Cartes;
 import carte.JeuDeCartes;
@@ -90,13 +92,48 @@ public class Jeu {
 				chaine.append("Victoire de ").append(courant.getNom()).append("\n");
 						
 			}
+			chaine.append(courant.afficherEtatJoueur());
+			chaine.append(courant.donnerKmParcourus());
+			
 		}
 		
 		if(!gagne && sabot.estVide()) {
 			chaine.append("Fin de la partie, le sabot est vide, personne n'a atteint les 1000 km");
+			
 		}
+		chaine.append("Voici le classement final ").append(classement()).append("\n");
+		
+		
 		
 		return chaine.toString();
 	}
+	
+
+		
+	
+	public List<Joueur> classement(){
+		Comparator<Joueur> comparateur = new Comparator<Joueur>() {
+			@Override
+			public int compare(Joueur j1, Joueur j2) {
+				int km1=j1.donnerKmParcourus();
+				int km2=j2.donnerKmParcourus();
+				
+				if (km1!=km2) {
+					return Integer.compare(km2, km1);
+				}
+				return j2.getNom().compareTo(j1.getNom());
+			}
+			
+			
+		};
+		TreeSet<Joueur> classement = new TreeSet<>(comparateur);
+		classement.addAll(joueurs);
+		return new ArrayList<>(classement);
+		
+	
+	}
+	
+	
+	
 	
 }

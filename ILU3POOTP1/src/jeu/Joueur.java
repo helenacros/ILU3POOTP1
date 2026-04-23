@@ -11,12 +11,16 @@ import carte.Bataille;
 import carte.Borne;
 import carte.Cartes;
 import carte.Limite;
+import strategies.Strategie;
 
 public class Joueur {
 
 	private String nom;
 	private ZoneDeJeu zoneDeJeu;
 	private MainJoueur mainJoueur;
+	private Strategie strategie= new Strategie() {
+		
+			};
 	
 	
 	public Joueur(String nom, ZoneDeJeu zoneDeJeu, MainJoueur mainJoueur) {
@@ -28,6 +32,10 @@ public class Joueur {
 	public String getNom() {
 		return nom;
 	}
+	
+	public void setStrategie(Strategie strategie) {
+        this.strategie = strategie;
+    }
 
 
 	@Override 
@@ -113,9 +121,9 @@ public class Joueur {
 	public Coup choisirCoup (Set <Joueur> participants) {
 		Set<Coup> possibles = coupsPossibles(participants);
 		if(!possibles.isEmpty()) {
-			return choisirCoupRandom(possibles);
+			return strategie.selectionnerCoup(possibles);
 		}
-		else return choisirCoupRandom(coupsDefausse());
+		else return strategie.selectionnerDefausse(coupsDefausse());
 	}
 	
 	public String afficherEtatJoueur() {
