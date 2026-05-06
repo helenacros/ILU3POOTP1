@@ -9,11 +9,12 @@ import java.util.Set;
 
 import carte.Bataille;
 import carte.Borne;
+import carte.Botte;
 import carte.Cartes;
 import carte.Limite;
 import strategies.Strategie;
 
-public class Joueur {
+public class Joueur implements Comparable<Joueur>{
 
 	private String nom;
 	private ZoneDeJeu zoneDeJeu;
@@ -136,5 +137,26 @@ public class Joueur {
 		return chaine.toString();
 	
 	}
+	
+	@Override
+	public int compareTo(Joueur autre) {
+		int comparekm=Integer.compare(this.donnerKmParcourus(), autre.donnerKmParcourus());
+		if(comparekm!=0) { //les deux sont diff
+			return comparekm;
+		}
+		//sinon compare sur le nom
+		return this.nom.compareTo(autre.nom);
+		
+	}
+	
+	public  Set<Botte> donnerBottes() {
+	    return zoneDeJeu.getBottes(); 
+	}
+	
+	public Cartes donnerSommetPile() {
+	    return zoneDeJeu.getSommeBataille(); //donne le sommet, juste mal nommee
+	}
+	
+	
 	
 }

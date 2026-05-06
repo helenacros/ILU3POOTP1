@@ -6,7 +6,7 @@ import carte.DebutLimite;
 import carte.FinLimite;
 import carte.Limite;
 
-public class Coup {
+public class Coup implements Comparable<Coup>{
 	private Joueur joueurCourant;
 	private Cartes carteJouee;
 	private Joueur joueurCible;
@@ -82,5 +82,24 @@ public class Coup {
 	}
 	
 	
+	
+	@Override
+	public int compareTo(Coup coup) {
+		Joueur cibleDuCoup = coup.getJoueurCible();
+		if (joueurCourant.equals(this.joueurCible) && joueurCourant.equals(cibleDuCoup)) {
+				return 0;
+		}
+		if (joueurCible == null && cibleDuCoup == null) {
+			return 0;
+		}
+		if (joueurCourant.equals(joueurCible)) {
+			return 1;
+		}
+		if (joueurCourant.equals(cibleDuCoup)) {
+			return -1;
+		}
+		return joueurCible.compareTo(cibleDuCoup);
+	}
+
 	
 }
